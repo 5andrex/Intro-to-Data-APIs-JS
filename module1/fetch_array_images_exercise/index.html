@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data / APIs 1</title>
+</head>
+<body>
+    <h1>Fetch image array</h1>
+    <script>
+        const imgFiles = [
+        'buildings.jpg',
+        'japan.jpg',
+        'moon.jpg'
+        ];
+        
+        getImages(imgFiles)
+            .then(response => {
+                console.log('images from an array of image files');
+            })
+            .catch(error => {
+                console.log('error in getting images!');
+                console.error(error);
+            });
+
+        async function getImages(imgFiles) {
+            for (let item of imgFiles) {
+                const response = await fetch(item);
+                const blob = await response.blob();
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                img.width = '200';
+                document.body.append(img);
+            }
+        }
+    </script>
+</body>
+</html>
