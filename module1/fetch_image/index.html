@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data / APIs 1</title>
+</head>
+<body>
+    <p style="font-family: system-ui, -apple-system; font-size: 12px; text-align: center;">
+        fetch image using .then method
+    </p>
+    <img src="" id="rainbow-then-method" width="100%"/>
+    
+    <p style="font-family: system-ui, -apple-system; font-size: 12px; text-align: center;">
+        fetch image using async / await method
+    </p>
+    <img src="" id="rainbow-async-method" width="100%"/>
+    <script>
+        
+        // async / await method
+        catchRainbow()
+            .then(response => {
+                console.log('fetched a rainbow using async / await');
+            })
+            .catch(error => {
+                console.log('error!');
+                console.error(error);
+            });
+
+        async function catchRainbow() {
+            const response = await fetch('rainbow.jpg');
+            const blob = await response.blob();
+            document.getElementById('rainbow-async-method').src = URL.createObjectURL(blob);
+        }
+
+        
+        // .then method
+        fetch('rainbow.jpg')
+            .then(response => {
+                console.log(`there's a rainbow after a rain`);
+                return response.blob();
+            })
+            .then(blob => {
+                document.getElementById('rainbow-then-method').src = URL.createObjectURL(blob);
+            });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data / APIs 1</title>
+</head>
+<body>
+    <div 
+    style="display: grid; 
+    place-content: center;
+    margin-bottom: 20px;
+    ">
+        
+        <p style="display: grid; 
+        place-content: center;
+        font-family:system-ui, -apple-system;
+        text-align: center;">
+        fetch text using .then method
+        </p>
+
+        <p id="poem-then" 
+        style="font-size: 12px; 
+        font-family:system-ui, -apple-system;
+        text-align: center;">
+        </p>
+
+    </div>
+
+    <div 
+    style="display: grid; 
+    place-content: center;">
+        
+        <p style="display: grid; 
+        place-content: center;
+        font-family:system-ui, -apple-system;
+        text-align: center;">
+        fetch text using async / await method
+        </p>
+
+        <p id="poem-async" 
+        style="font-size: 12px; 
+        font-family:system-ui, -apple-system;
+        text-align: center;">
+        </p>
+
+    </div>
+    <script>
+        console.log('fetching a poem from a text file');
+
+        // .then method
+        fetch('poem-then.txt')
+            .then(response => {
+                return response.text();
+            }).then(poem => {
+                document.getElementById('poem-then').innerText = poem;
+            }).catch(error => {
+                console.log('error, no poem found!');
+                console.error(error);
+            });
+
+        // async / await method
+        printPoem()
+            .then(poem => {
+                document.getElementById('poem-async').innerText = poem;
+            })
+            .catch(error => {
+                console.log('error, no poem found!');
+                console.error(error);
+            })
+
+
+        async function printPoem() {
+            const response = await fetch('poem-async.txt');
+            return response.text();
+        }
+    </script>
+</body>
+</html>
