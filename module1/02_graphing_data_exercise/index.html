@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <title>Graphing Data Exercise</title>
+</head>
+<body>
+    <canvas id="chart" width="800" height="400"></canvas>
+    <script>
+        createChart();
+
+        async function createChart() {
+            const data = await getData();
+            const ctx = document.getElementById('chart');
+            new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.xs,
+                            datasets: [{
+                            label: 'Northern Hemisphere-mean monthly, seasonal, and annual means',
+                            data: data.ys,
+                            borderWidth: 1,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255,99, 132, 02)'
+                            }]
+                        },
+                        options: {
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            callback: function(value, index, ticks) {
+                                                return value + '°';
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+        }
+
+        async function getData() {
+            const xs = [];
+            const ys = [];
+
+            const response = await fetch('ZonAnn.Ts+dSST.csv');
+            const data = await response.text();
+
+            const table = data.split('\n').slice(2);
+            table.forEach(row => {
+                const columns = row.split(',');
+                const columnsData = columns.slice(-19, 19);
+                const year = columnsData[0];
+                xs.push(year);
+                const temps = columnsData[1];
+                ys.push(parseFloat(temps) + 14);
+                console.log(year, temps);
+            });
+            return { xs, ys };
+        }
+    </script>
+</body>
+</html>
