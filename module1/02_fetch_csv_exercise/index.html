@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch and Graph CSV Exercise</title>
+</head>
+<body>
+    <script>
+        // Data from: https://data.giss.nasa.gov/gistemp/
+
+        getData();
+
+        async function getData() {
+            const response = await fetch('GLB.Ts+dSST.csv');
+            const data = await response.text();
+            console.log(data);
+
+            const table = data.split('\n').slice(3);
+            table.forEach(row => {
+                const column = row.split(',');
+                const tableData = column.slice(-19, 19);
+                const year = tableData[0];
+                const Jan = tableData[1];
+                console.log(year, Jan);
+            })
+
+        }
+    </script>
+</body>
+</html>
