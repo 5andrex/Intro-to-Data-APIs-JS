@@ -19,7 +19,7 @@
     <script>
         
         // async / await method
-        catchRainbow()
+        catchRainbowImage()
             .then(response => {
                 console.log('fetched a rainbow using async / await');
             })
@@ -28,7 +28,7 @@
                 console.error(error);
             });
 
-        async function catchRainbow() {
+        async function catchRainbowImage() {
             const response = await fetch('rainbow.jpg');
             const blob = await response.blob();
             document.getElementById('rainbow-async-method').src = URL.createObjectURL(blob);
